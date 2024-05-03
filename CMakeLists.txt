@@ -11,5 +11,8 @@ endif()
 
 project ("LLFiguresCount")
 
-# Include sub-projects.
-add_subdirectory ("LLFiguresCount")
+add_executable (LLFiguresCount "LLFiguresCount.cpp" "ConsoleInterfaceRunner.cpp" "Graph.cpp")
+
+if (CMAKE_VERSION VERSION_GREATER 3.12)
+  set_property(TARGET LLFiguresCount PROPERTY CXX_STANDARD 20)
+endif()
