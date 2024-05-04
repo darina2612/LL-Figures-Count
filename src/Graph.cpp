@@ -25,27 +25,33 @@ int64_t Graph::CalculateNumberOfConnectedComponents()
 void Graph::ConstructGraphFromMatrix(std::vector<std::vector<bool>> inputMatrix)
 {
 	auto rowLength = inputMatrix.empty() ? 0 : inputMatrix.front().size();
-	for (auto rowNumber = 1; rowNumber < inputMatrix.size(); ++rowNumber)
+	for (auto rowNumber = 0; rowNumber < inputMatrix.size(); ++rowNumber)
 	{
-		for (auto columnNumber = 1; columnNumber < rowLength; ++columnNumber)
+		for (auto columnNumber = 0; columnNumber < rowLength; ++columnNumber)
 		{
-			if (!inputMatrix[rowNumber][columnNumber])
+			auto currentElementNumber = rowNumber * rowLength + columnNumber;
+
+			if (inputMatrix[rowNumber][columnNumber])
 			{
-				// this is a non-marked element - not a vertex in the graph, so continue
+				_visitedVertices.emplace(std::make_pair(currentElementNumber, false));
+
+				if (!_adjacencyList.contains(currentElementNumber))
+				{
+					_adjacencyList.emplace(std::make_pair(currentElementNumber, std::vector<uint64_t>()));
+				}
+			}
+			else
+			{
 				continue;
 			}
 
-			auto currentElementNumber = rowNumber * rowLength + columnNumber;
-
-			_visitedVertices.emplace(std::make_pair(currentElementNumber, false));
-
 			auto previousRow = rowNumber - 1;
 			auto previousColumn = columnNumber - 1;
-			if (inputMatrix[previousColumn][columnNumber])
+			if (previousRow >= 0 && inputMatrix[previousRow][columnNumber])
 			{
 				AddEdge(previousRow * rowLength + columnNumber, rowNumber * rowLength + columnNumber);
 			}
-			if (inputMatrix[rowNumber][previousColumn])
+			if (previousColumn >= 0 && inputMatrix[rowNumber][previousColumn])
 			{
 				AddEdge(currentElementNumber - 1, currentElementNumber);
 			}

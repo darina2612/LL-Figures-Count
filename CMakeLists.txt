@@ -1,7 +1,8 @@
 ﻿# CMakeList.txt : Top-level CMake project file, do global configuration
 # and include sub-projects here.
-#
-cmake_minimum_required (VERSION 3.8)
+
+# Requiring cmake v3.12 at minimum in order to use c++ 20
+cmake_minimum_required (VERSION 3.12) 
 
 # Enable Hot Reload for MSVC compilers if supported.
 if (POLICY CMP0141)
@@ -9,10 +10,7 @@ if (POLICY CMP0141)
   set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<IF:$<AND:$<C_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:MSVC>>,$<$<CONFIG:Debug,RelWithDebInfo>:EditAndContinue>,$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>>")
 endif()
 
-project ("LLFiguresCount")
+project (LLFiguresCount)
 
-add_executable (LLFiguresCount "LLFiguresCount.cpp" "ConsoleInterfaceRunner.cpp" "Graph.cpp")
-
-if (CMAKE_VERSION VERSION_GREATER 3.12)
-  set_property(TARGET LLFiguresCount PROPERTY CXX_STANDARD 20)
-endif()
+add_subdirectory (src)
+add_subdirectory (test)
