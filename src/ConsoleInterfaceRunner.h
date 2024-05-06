@@ -1,10 +1,15 @@
+#include <vector>
+
 class ConsoleInterfaceRunner
 {
 public:
-	void Run();
+	static void Run();
 
 private:
-	bool ProcessSingleIteration();
+	static void ProcessSingleIteration();
+	static void ProcessIterationInput(std::vector<std::vector<bool>>& inputMatrix);
+	static void PrintUsageInfo();
 
-	bool ReadIterationInput();
+	static const char EmptyElementSymbol;
+	static const char MarkedElementSymbol;
 };
