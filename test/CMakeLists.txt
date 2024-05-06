@@ -37,6 +37,7 @@ include_directories (${CMAKE_SOURCE_DIR}/src)
 add_executable(
   UnitTests
   GraphTests.cpp
+  TestUtils.cpp
   ${SRC_DIR}/Graph.cpp
 )
 
@@ -48,6 +49,7 @@ gtest_discover_tests(UnitTests)
 add_executable(
   Benchmark
   Benchmark.cpp
+  TestUtils.cpp
   ${SRC_DIR}/Graph.cpp
 )
 target_link_libraries(Benchmark PRIVATE benchmark::benchmark)

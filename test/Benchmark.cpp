@@ -1,10 +1,11 @@
 #include <benchmark/benchmark.h>
 
 #include "Graph.h"
+#include "TestUtils.h"
 
 static void BM_CalculateConnectedComponents_NoMarkedElements(benchmark::State& state)
 {
-	std::vector<std::vector<bool>> inputMatrix(state.range(0), std::vector<bool>(state.range(1), false));
+	auto inputMatrix = TestUtils::GenerateInputMatrix(state.range_x(), state.range_y(), [](size_t, size_t) { return false; });
 
 	while (state.KeepRunning())
 	{
@@ -24,7 +25,7 @@ BENCHMARK(BM_CalculateConnectedComponents_NoMarkedElements)
 
 static void BM_CalculateConnectedComponents_AllElementsAreMarked(benchmark::State& state)
 {
-	std::vector<std::vector<bool>> inputMatrix(state.range(0), std::vector<bool>(state.range(1), true));
+	auto inputMatrix = TestUtils::GenerateInputMatrix(state.range_x(), state.range_y(), [](size_t, size_t) { return true; });
 
 	while (state.KeepRunning())
 	{
@@ -44,12 +45,10 @@ BENCHMARK(BM_CalculateConnectedComponents_AllElementsAreMarked)
 
 static void BM_CalculateConnectedComponents_DiagonalIsMarked(benchmark::State& state)
 {
-	std::vector<std::vector<bool>> inputMatrix(state.range(0), std::vector<bool>(state.range(1), false));
-
-	for (auto i = 0; i < std::min(state.range(0), state.range(1)); ++i)
-	{
-		inputMatrix[i][i] = true;
-	}
+	auto inputMatrix = TestUtils::GenerateInputMatrix(
+		state.range_x(),
+		state.range_y(),
+		[](size_t row, size_t column) { return row == column; });
 
 	while (state.KeepRunning())
 	{
@@ -69,15 +68,10 @@ BENCHMARK(BM_CalculateConnectedComponents_DiagonalIsMarked)
 
 static void BM_CalculateConnectedComponents_EveryOtherRowIsMarked(benchmark::State& state)
 {
-	std::vector<std::vector<bool>> inputMatrix(state.range(0), std::vector<bool>(state.range(1), false));
-
-	for (auto row = 0; row < state.range(0); row += 2)
-	{
-		for (auto column = 0; column < state.range(1); ++column)
-		{
-			inputMatrix[row][column] = true;
-		}
-	}
+	auto inputMatrix = TestUtils::GenerateInputMatrix(
+		state.range_x(),
+		state.range_y(),
+		[](size_t row, size_t) { return row % 2 == 0; });
 
 	while (state.KeepRunning())
 	{
@@ -97,15 +91,10 @@ BENCHMARK(BM_CalculateConnectedComponents_EveryOtherRowIsMarked)
 
 static void BM_CalculateConnectedComponents_EveryOtherColumnIsMarked(benchmark::State& state)
 {
-	std::vector<std::vector<bool>> inputMatrix(state.range(0), std::vector<bool>(state.range(1), false));
-
-	for (auto row = 0; row < state.range(0); ++row)
-	{
-		for (auto column = 0; column < state.range(1); column += 2)
-		{
-			inputMatrix[row][column] = true;
-		}
-	}
+	auto inputMatrix = TestUtils::GenerateInputMatrix(
+		state.range_x(),
+		state.range_y(),
+		[](size_t, size_t column) { return column % 2 == 0; });
 
 	while (state.KeepRunning())
 	{
@@ -125,15 +114,7 @@ BENCHMARK(BM_CalculateConnectedComponents_EveryOtherColumnIsMarked)
 
 static void BM_CalculateConnectedComponents_RandomElementsAreMarked(benchmark::State& state)
 {
-	std::vector<std::vector<bool>> inputMatrix(state.range(0), std::vector<bool>(state.range(1), false));
-
-	for (auto row = 0; row < state.range(0); ++row)
-	{
-		for (auto column = 0; column < state.range(1); ++column)
-		{
-			inputMatrix[row][column] = rand() % 2 == 0;
-		}
-	}
+	auto inputMatrix = TestUtils::GenerateInputMatrix(state.range_x(), state.range_y(), [](size_t, size_t) { return rand() % 2 == 0; });
 
 	while (state.KeepRunning())
 	{
