@@ -18,10 +18,8 @@ BENCHMARK(BM_CalculateConnectedComponents_NoMarkedElements)
 ->Args({ 10, 10 })
 ->Args({ 10, 100 })
 ->Args({ 1000, 100 })
-->Args({ 1000, 20000 })
-->Args({ 100000, 20000 })
-->Args({ 500000, 500000 })
-->Args({ 1000000, 2000000 })
+->Args({ 1000, 1000 })
+->Args({ 1000, 10000 })
 ->Unit(benchmark::kMillisecond);
 
 static void BM_CalculateConnectedComponents_AllElementsAreMarked(benchmark::State& state)
@@ -40,10 +38,8 @@ BENCHMARK(BM_CalculateConnectedComponents_AllElementsAreMarked)
 ->Args({ 10, 10 })
 ->Args({ 10, 100 })
 ->Args({ 1000, 100 })
-->Args({ 1000, 20000 })
-->Args({ 100000, 20000 })
-->Args({ 500000, 500000 })
-->Args({ 1000000, 2000000 })
+->Args({ 1000, 1000 })
+->Args({ 1000, 10000 })
 ->Unit(benchmark::kMillisecond);
 
 static void BM_CalculateConnectedComponents_DiagonalIsMarked(benchmark::State& state)
@@ -67,10 +63,8 @@ BENCHMARK(BM_CalculateConnectedComponents_DiagonalIsMarked)
 ->Args({ 10, 10 })
 ->Args({ 10, 100 })
 ->Args({ 1000, 100 })
-->Args({ 1000, 20000 })
-->Args({ 100000, 20000 })
-->Args({ 500000, 500000 })
-->Args({ 1000000, 2000000 })
+->Args({ 1000, 1000 })
+->Args({ 1000, 10000 })
 ->Unit(benchmark::kMillisecond);
 
 static void BM_CalculateConnectedComponents_EveryOtherRowIsMarked(benchmark::State& state)
@@ -79,7 +73,7 @@ static void BM_CalculateConnectedComponents_EveryOtherRowIsMarked(benchmark::Sta
 
 	for (auto row = 0; row < state.range(0); row += 2)
 	{
-		for (auto column = 0; column < state.range(0); ++column)
+		for (auto column = 0; column < state.range(1); ++column)
 		{
 			inputMatrix[row][column] = true;
 		}
@@ -97,10 +91,8 @@ BENCHMARK(BM_CalculateConnectedComponents_EveryOtherRowIsMarked)
 ->Args({ 10, 10 })
 ->Args({ 10, 100 })
 ->Args({ 1000, 100 })
-->Args({ 1000, 20000 })
-->Args({ 100000, 20000 })
-->Args({ 500000, 500000 })
-->Args({ 1000000, 2000000 })
+->Args({ 1000, 1000 })
+->Args({ 1000, 10000 })
 ->Unit(benchmark::kMillisecond);
 
 static void BM_CalculateConnectedComponents_EveryOtherColumnIsMarked(benchmark::State& state)
@@ -109,7 +101,7 @@ static void BM_CalculateConnectedComponents_EveryOtherColumnIsMarked(benchmark::
 
 	for (auto row = 0; row < state.range(0); ++row)
 	{
-		for (auto column = 0; column < state.range(0); column += 2)
+		for (auto column = 0; column < state.range(1); column += 2)
 		{
 			inputMatrix[row][column] = true;
 		}
@@ -127,10 +119,8 @@ BENCHMARK(BM_CalculateConnectedComponents_EveryOtherColumnIsMarked)
 ->Args({ 10, 10 })
 ->Args({ 10, 100 })
 ->Args({ 1000, 100 })
-->Args({ 1000, 20000 })
-->Args({ 100000, 20000 })
-->Args({ 500000, 500000 })
-->Args({ 1000000, 2000000 })
+->Args({ 1000, 1000 })
+->Args({ 1000, 10000 })
 ->Unit(benchmark::kMillisecond);
 
 static void BM_CalculateConnectedComponents_RandomElementsAreMarked(benchmark::State& state)
@@ -139,7 +129,7 @@ static void BM_CalculateConnectedComponents_RandomElementsAreMarked(benchmark::S
 
 	for (auto row = 0; row < state.range(0); ++row)
 	{
-		for (auto column = 0; column < state.range(0); ++column)
+		for (auto column = 0; column < state.range(1); ++column)
 		{
 			inputMatrix[row][column] = rand() % 2 == 0;
 		}
@@ -157,10 +147,8 @@ BENCHMARK(BM_CalculateConnectedComponents_RandomElementsAreMarked)
 ->Args({ 10, 10 })
 ->Args({ 10, 100 })
 ->Args({ 1000, 100 })
-->Args({ 1000, 20000 })
-->Args({ 100000, 20000 })
-->Args({ 500000, 500000 })
-->Args({ 1000000, 2000000 })
+->Args({ 1000, 1000 })
+->Args({ 1000, 10000 })
 ->Unit(benchmark::kMillisecond);
 
 BENCHMARK_MAIN();
