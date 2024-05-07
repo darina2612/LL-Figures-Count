@@ -5,12 +5,12 @@
 class Graph
 {
 public:
-	Graph(std::vector<std::vector<bool>> inputMatrix);
+	Graph(const std::vector<std::vector<bool>>& inputMatrix);
 
 	int64_t CalculateNumberOfConnectedComponents();
 
 private:
-	void ConstructGraphFromMatrix(std::vector<std::vector<bool>> inputMatrix);
+	void ConstructGraphFromMatrix(const std::vector<std::vector<bool>>& inputMatrix);
 	void AddEdge(uint64_t srartVertex, uint64_t endVertex);
 	void RunDFS(uint64_t staringVertexId);
 

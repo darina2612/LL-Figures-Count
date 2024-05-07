@@ -39,7 +39,7 @@ void ConsoleInterfaceRunner::ProcessSingleIteration()
 
 void ConsoleInterfaceRunner::ProcessIterationInput(std::vector<std::vector<bool>>& inputMatrix)
 {
-	size_t n, m;
+	size_t n = 0, m = 0;
 
 	std::cin >> n >> m;
 	std::cin.get();

@@ -1,14 +1,14 @@
 #include "Graph.h"
 #include <stack>
 
-Graph::Graph(std::vector<std::vector<bool>> inputMatrix)
+Graph::Graph(const std::vector<std::vector<bool>>& inputMatrix)
 {
 	ConstructGraphFromMatrix(inputMatrix);
 }
 
 int64_t Graph::CalculateNumberOfConnectedComponents()
 {
-	int64_t numberOfConnectedComponents{ 0 };
+	int64_t numberOfConnectedComponents = 0;
 
 	for (const auto& kvp : _adjacencyList)
 	{
@@ -23,7 +23,7 @@ int64_t Graph::CalculateNumberOfConnectedComponents()
 	return numberOfConnectedComponents;
 }
 
-void Graph::ConstructGraphFromMatrix(std::vector<std::vector<bool>> inputMatrix)
+void Graph::ConstructGraphFromMatrix(const std::vector<std::vector<bool>>& inputMatrix)
 {
 	auto rowLength = inputMatrix.empty() ? 0 : inputMatrix.front().size();
 	for (auto rowNumber = 0; rowNumber < inputMatrix.size(); ++rowNumber)
@@ -43,7 +43,7 @@ void Graph::ConstructGraphFromMatrix(std::vector<std::vector<bool>> inputMatrix)
 			_visitedVertices.emplace(std::make_pair(currentElementNumber, false));
 
 			// Add the vertex id as key to the adjacency list map
-			_adjacencyList.emplace(std::make_pair(currentElementNumber, std::vector<uint64_t>()));
+			_adjacencyList.emplace(currentElementNumber, std::vector<uint64_t>());
 
 			// Now check whether any of the alredy processed neighbouring elements in the input matrix is also marked.
 			// In case it is, add the corresponding edge to the graph
@@ -83,7 +83,7 @@ void Graph::RunDFS(uint64_t staringVertexId)
 
 	while (!traversalStack.empty())
 	{
-		uint64_t currentStartingVertex = traversalStack.top();
+		auto currentStartingVertex = traversalStack.top();
 		traversalStack.pop();
 
 		_visitedVertices[currentStartingVertex] = true;
